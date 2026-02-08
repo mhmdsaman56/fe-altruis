@@ -1,0 +1,18 @@
+ <app-tabs [tabs]="tabs">
+   <ng-template appTabContent="arround_you">
+    <div class="text-blue-500">
+        Konten sekitar Anda
+    </div>
+  </ng-template>
+
+  <ng-template appTabContent="viral_question">
+    <div class="flex flex-col gap-3">
+        <app-card  *ngFor="let question of questions" [question]="question"></app-card>
+    </div>
+  </ng-template>
+    <ng-template appTabContent="customized_for_you">
+    <div class="text-blue-500">
+        Konten yang disesuaikan untuk Anda
+    </div>
+  </ng-template>
+    </app-tabs>`
