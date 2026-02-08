@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import {HomeComponent} from "../components/angular/pages/home/home.component.ts";
+import {HomeComponent} from "../components/angular/pages/home/home.component";
 ---
 
 <Layout>
@@ -23,8 +23,10 @@ import {HomeComponent} from "../components/angular/pages/home/home.component.ts"
             </div>
 
             <div class="w-full mt-8">
-                <HomeComponent client:only="angular" />
+                <HomeComponent client:load />
             </div>
         </div>
+        
     </div>
+    
 </Layout>
