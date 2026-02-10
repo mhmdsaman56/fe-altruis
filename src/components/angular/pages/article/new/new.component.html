@@ -1,0 +1,33 @@
+<div class="flex min-h-screen w-full bg-gray-100">
+    <div class="flex flex-col w-full">
+        <app-navbar />
+
+        <div class="flex">
+            <app-sidebar />
+            <div class="flex-1 p-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex justify-end gap-2">
+                        <button href="/articles/new" class="btn  w-40 ">Save Draft</button>
+                        <button (click)="createArticle()" class="btn btn-neutral w-40 ">Post Article</button>
+                    </div>
+                    <div>
+                    <fieldset class="fieldset w-full">
+                        <legend class="fieldset-legend">What is your title article?</legend>
+                        <input [(ngModel)]="title" type="text" class="input w-full" placeholder="Type here" />
+
+                    </fieldset>
+                    <fieldset class="fieldset">
+                        <legend class="fieldset-legend">What is your name?</legend>
+                        <quill-editor class="h-screen" [(ngModel)]="content" [modules]="editorConfig"
+                            placeholder="Tuliskan pemikiranmu..." class="block bg-white">
+                        </quill-editor>
+
+                    </fieldset>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

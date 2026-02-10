@@ -1,0 +1,60 @@
+ <div>
+        <h1 class="text-lg font-bold">Create an account</h1>
+        <p>Enter your information below to create your account</p>
+    </div>
+    <div>
+        <label class="font-medium" for="fullName">Full Name</label>
+        <input
+            class="border w-full rounded-md p-2 mt-1"
+            type="text"
+            placeholder="Your full name"
+            id="fullName"
+            [(ngModel)]="name"
+        />
+    </div>
+    <div>
+        <label class="font-medium" for="email">Email</label>
+        <input
+            class="border w-full rounded-md p-2 mt-1"
+            type="text"
+            placeholder="Your email"
+            id="email"
+            [(ngModel)]="email"
+        />
+    </div>
+    <div>
+        <label class="font-medium" for="password">Password</label>
+        <input
+            class="border w-full rounded-md p-2 mt-1"
+            type="password"
+            placeholder="Your password"
+            id="password"
+            [(ngModel)]="password"
+        />
+    </div>
+        <div>
+        <label class="font-medium" for="passwordConfirmation">Password Confirmation</label>
+        <input
+            class="border w-full rounded-md p-2 mt-1"
+            type="password"
+            placeholder="Confirm your password"
+            id="passwordConfirmation"
+            [(ngModel)]="password_confirmation"
+        />
+    </div>
+    <p *ngIf="error()" class="text-red-500 text-sm">{{ error() }}</p>
+    <div class="flex flex-col gap-3">
+        <button 
+        
+        class="bg-black text-white rounded-lg p-2" [disabled]="loading()"
+            (click)="register()">{{ loading() ? 'Registering...' : 'Create Account' }}</button
+        >
+        <button
+            class="bg-white text-black border border-slate-500 rounded-lg p-2"
+            >Sign up with google</button
+        >
+        <p class="text-center text-slate-500">
+            Already have an account? <a href="/login" class="underline"
+                >Log in</a>
+        </p>
+    </div>

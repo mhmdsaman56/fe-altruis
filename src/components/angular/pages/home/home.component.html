@@ -1,18 +1,48 @@
- <app-tabs [tabs]="tabs">
-   <ng-template appTabContent="arround_you">
-    <div class="text-blue-500">
-        Konten sekitar Anda
-    </div>
-  </ng-template>
-
-  <ng-template appTabContent="viral_question">
-    <div class="flex flex-col gap-3">
-        <app-card  *ngFor="let question of questions" [question]="question"></app-card>
-    </div>
-  </ng-template>
-    <ng-template appTabContent="customized_for_you">
-    <div class="text-blue-500">
-        Konten yang disesuaikan untuk Anda
-    </div>
-  </ng-template>
-    </app-tabs>`
+ <div class="flex min-h-screen w-full bg-gray-100">
+            <div class="flex flex-col w-full">
+                <app-navbar />
+                <div class="flex">
+                    <app-sidebar />
+                    <div class="flex-1 p-6">
+                        <div class="max-w-4xl mx-auto">
+                            <div class="w-full rounded-lg bg-white p-6">
+                                <p class="font-bold text-xl">
+                                    Apa yang ingin anda tanyakan hari ini?
+                                </p>
+                                <textarea class="w-full border border-gray-300 rounded-md p-2 mt-4" rows="3"
+                                    placeholder="Tanyakan apapun, namamu gak akan muncul sebagai penanya..." [(ngModel)]="body"></textarea>
+                                <div class="flex justify-end mt-4">
+                                    <button (click)="createDiscussion()" class="bg-red-700 text-white px-4 py-2 rounded-lg">
+                                        Kirim Pertanyaan
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="w-full mt-8">
+                                <app-tabs [tabs]="tabs">
+                                    <ng-template appTabContent="around_you">
+                                        <div class="flex flex-col gap-3">
+                                             <app-card *ngFor="let discussion of aroundYouDiscussions()" [data]="discussion"></app-card>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template appTabContent="hyped_discussions">
+                                        <div class="flex flex-col gap-3">
+                                            <div *ngFor="let discussion of hypedDiscussions()">
+                                                <app-card [data]="discussion"></app-card>
+                                                <app-card-answer [postId]="discussion.id"></app-card-answer>
+                                                
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template appTabContent="customized_by_you">
+                                        <div class="flex flex-col gap-3">
+                                             <app-card *ngFor="let discussion of customizedByYouDiscussions()" [data]="discussion"></app-card>
+                                        </div>
+                                    </ng-template>
+                                </app-tabs>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    

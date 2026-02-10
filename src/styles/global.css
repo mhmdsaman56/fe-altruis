@@ -10,3 +10,19 @@
     font-family: var(--font-sans);
   }
 }
+
+@import 'quill/dist/quill.snow.css';
+
+
+.ql-toolbar.ql-snow {
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0.75rem 0.75rem 0 0;
+  background: #f9fafb;
+}
+
+.ql-container.ql-snow {
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0 0 0.75rem 0.75rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+}

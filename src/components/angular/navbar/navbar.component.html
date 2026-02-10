@@ -1,0 +1,41 @@
+<div class="bg-white p-3  w-full flex justify-between items-center gap-5">
+    <label class="btn btn-circle swap swap-rotate self-start">
+        <!-- this hidden checkbox controls the state -->
+        <input type="checkbox" [checked]="sidebar.open()" (change)="toggle()" />
+
+        <!-- hamburger icon -->
+        <svg class="swap-off fill-current" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+            viewBox="0 0 512 512">
+            <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
+        </svg>
+
+        <!-- close icon -->
+        <svg class="swap-on fill-current" xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+            viewBox="0 0 512 512">
+            <polygon
+                points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
+        </svg>
+    </label>
+    <a href="/timeline" class="text-black font-bold text-2xl text-center">Altru<span class="text-red-500">.</span>is</a>
+    <div class="flex items-center gap-0">
+        
+        <div class="dropdown dropdown-bottom dropdown-end">
+            <div tabindex="0" role="button" class="btn btn-ghost"><lucide-icon [img]="Bell" size="24" /></div>
+            <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-80 p-2 shadow-sm">
+                <li><p>Noel membuat pertanyaan</p></li>
+                <li><p>Saka memberikan komentar</p></li>
+                <li><p>Test membuat notifikasi 1</p></li>
+                <li><p>Test membuat notifikasi 2</p></li>
+                <li><p>Test membuat notifikasi 3</p></li>
+
+                <li ><a href="/notification" class="block text-center underline">See all notifications</a></li>
+            </ul>
+        </div>
+        <a class="btn btn-ghost" href="/profile">
+            <lucide-icon [img]="User" size="24" />
+        </a>
+        <a class="btn btn-ghost" href="/settings">
+            <lucide-icon [img]="Settings" size="24" />
+        </a>
+    </div>
+</div>

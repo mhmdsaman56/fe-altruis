@@ -1,64 +1,128 @@
-<div class="bg-white p-6 rounded-lg">
-    {{question}}
-    <div class="pt-3 border-t border-gray-200 mt-10 flex  gap-10">
-        <div class="space-x-2">
-            <button>
-              <!-- <lucide-icon [img]="ThumbsUp" [size]="28"></lucide-icon> -->
-                Like
-            </button>
-            <span class="border-l border-gray-400"></span>
+<div class=" bg-white p-6 rounded-lg  border border-gray-100">
+    <h1 class="text-xl font-semibold mb-2">Question</h1>
+    <div class="bg-slate-50 p-4 mb-5">
+        {{data.body}}
+    </div>
 
-            <button>
-                <!-- <lucide-icon [img]="ThumbsDown" [size]="28"></lucide-icon> -->
-                 Dislike
-                    
-            </button>
+    <div class="py-3  mt-0 flex flex-wrap gap-x-10 gap-y-4">
+        <div class="space-y-2">
+            <p>Shareworthy <span>
+                    <div class="dropdown dropdown-bottom">
+                        <div tabindex="0" role="button" class="hover:cursor-pointer"><lucide-icon size="16"
+                                [img]="CircleQuestionMark"></lucide-icon></div>
+                        <div tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-60 p-2 shadow-sm">
+                            If it's worth it -> Upvote <br>
+                                If it's not worth it -> Downvote
+                        </div>
+                    </div>
+                </span></p>
+
+
+
+            <div class="flex items-center space-x-8">
+                <div class="text-center">
+                    <p [ngClass]="{'text-red-700': getReaction('upvote').is_active}" class="text-gray-500 text-sm">{{getReaction('upvote').count}}</p>
+                    <button class="hover:cursor-pointer  font-medium "
+                        [ngClass]="{'text-red-700': getReaction('upvote').is_active}"
+                        (click)="addReaction(data.id, 'upvote')">
+                        Upvote
+                    </button>
+                </div>
+
+                <div class="text-center">
+                    <p [ngClass]="{'text-red-700': getReaction('downvote').is_active}" class="text-gray-500 text-sm">{{getReaction('downvote').count}}</p>
+                    <button class="hover:cursor-pointer  font-medium"
+                        [ngClass]="{'text-red-700': getReaction('downvote').is_active}"
+                        (click)="addReaction(data.id, 'downvote')">
+                        Downvote
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="space-x-2">
+        <span class="border-l border-gray-300"></span>
+        <div class="space-y-2">
+            <p class="">Reflection
+                <span>
+                    <div class="dropdown dropdown-bottom">
+                        <div tabindex="0" role="button" class="hover:cursor-pointer"><lucide-icon size="16"
+                                [img]="CircleQuestionMark"></lucide-icon></div>
+                        <div tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-96 p-2 shadow-sm">
+                            Practice to reflect and mindful about online opinion <br>
+                            You might LIKE something but DISAGREE <br>
+                            with it and still think this post is HELPFUL
+                            
+                            
+                        </div>
+                    </div>
+                </span>
+            </p>
+            <div class="flex items-center space-x-8">
+                <div class="text-center">
+                    <p [ngClass]="{'text-red-700': getReaction('like').is_active}" class="text-gray-500 text-sm">{{getReaction('like').count}}</p>
+                    <button class="hover:cursor-pointer  font-medium"
+                        [ngClass]="{'text-red-700': getReaction('like').is_active}"
+                        (click)="addReaction(data.id, 'like')">
+                        Like
+                    </button>
+                </div>
 
-            <button>
-                <!-- <lucide-icon [img]="CircleCheck" [size]="28"></lucide-icon> -->
-                Agree
-            </button>
-                        <span class="border-l border-gray-400"></span>
+                <div class="text-center">
+                    <p [ngClass]="{'text-red-700': getReaction('dislike').is_active}" class="text-gray-500 text-sm">{{getReaction('dislike').count}}</p>
+                    <button class="hover:cursor-pointer  font-medium"
+                        [ngClass]="{'text-red-700': getReaction('dislike').is_active}"
+                        (click)="addReaction(data.id, 'dislike')">
+                        Dislike
+                    </button>
+                </div>
 
-            <button>
-                <!-- <lucide-icon [img]="CircleX" [size]="28"></lucide-icon> -->
-                Disagree
-            </button>
+                <div class="text-center">
+                    <p [ngClass]="{'text-red-700': getReaction('agree').is_active}" class="text-gray-500 text-sm">{{getReaction('agree').count}}</p>
+                    <button class="hover:cursor-pointer  font-medium"
+                        [ngClass]="{'text-red-700': getReaction('agree').is_active}"
+                        (click)="addReaction(data.id, 'agree')">
+                        Agree
+                    </button>
+                </div>
+
+                <div class="text-center">
+                    <p [ngClass]="{'text-red-700': getReaction('disagree').is_active}" class="text-gray-500 text-sm">{{getReaction('disagree').count}}</p>
+                    <button class="hover:cursor-pointer  font-medium"
+                        [ngClass]="{'text-red-700': getReaction('disagree').is_active}"
+                        (click)="addReaction(data.id, 'disagree')">
+                        Disagree
+                    </button>
+                </div>
+
+                <div class="text-center">
+                    <p [ngClass]="{'text-red-700': getReaction('helpful').is_active}" class="text-gray-500 text-sm">{{getReaction('helpful').count}}</p>
+                    <button class="hover:cursor-pointer  font-medium"
+                        [ngClass]="{'text-red-700': getReaction('helpful').is_active}"
+                        (click)="addReaction(data.id, 'helpful')">
+                        Helpful
+                    </button>
+                </div>
+
+                <div class="text-center">
+                    <p [ngClass]="{'text-red-700': getReaction('unhelpful').is_active}" class="text-gray-500 text-sm">{{getReaction('unhelpful').count}}</p>
+                    <button class="hover:cursor-pointer  font-medium"
+                        [ngClass]="{'text-red-700': getReaction('unhelpful').is_active}"
+                        (click)="addReaction(data.id, 'unhelpful')">
+                        Unhelpful
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="space-x-2">
 
-            <button>
-                <!-- <lucide-icon [img]="Check" [size]="28"></lucide-icon> -->
-                Helpful
-            </button>
-                        <span class="border-l border-gray-400"></span>
 
-            <button> 
-                Unhelpful
-                <!-- <lucide-icon [img]="X" [size]="28"></lucide-icon> --> 
-            </button>
-        </div>
-        <div class="space-x-2">
 
-            <button>
-                Upvote
-                <!-- <lucide-icon [img]="ArrowBigUp" [size]="28"></lucide-icon> -->
-            </button>
-                        <span class="border-l border-gray-400"></span>
+        <!-- <div class="flex items-center">
+            <div class="text-center">
+                <p class="text-gray-500 text-sm">{{getReaction('comment').count}}</p>
+                <button class="hover:cursor-pointer  font-medium">
+                    Answer
+                </button>
+            </div>
+        </div> -->
 
-            <button>
-                Downvote
-                <!-- <lucide-icon [img]="ArrowBigDown" [size]="28"></lucide-icon> -->
-            </button>
-        </div>
-        <div>
-            <button>
-                Comment
-                <!-- <lucide-icon [img]="MessageCircle" [size]="28"></lucide-icon> -->
-            </button>
-        </div>
-            
     </div>
 </div>

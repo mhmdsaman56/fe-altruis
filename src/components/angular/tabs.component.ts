@@ -6,14 +6,14 @@ import { CommonModule } from "@angular/common";
     selector : 'app-tabs',
     standalone: true,
     imports: [CommonModule],
-    template: `<div class="flex gap-10 ">
+    template: `<div class="flex justify-between">
     <button
     *ngFor="let tab of tabs"
     (click)="setTab(tab.id)"
     class="pb-3  border-b-2
            hover:text-black hover:border-gray-300 transition"
     [ngClass]=" activeTab === tab.id ?
-      'border-gray-500 text-black font-semibold': 
+      'border-red-700 text-black font-semibold': 
       'border-transparent text-gray-500'
     "
   >
@@ -21,7 +21,7 @@ import { CommonModule } from "@angular/common";
   </button>
 </div>
 
-<div class="mt-6">
+<div class="mt-3">
    <ng-container *ngFor="let content of contentTemplates">
         <ng-container *ngIf="content.tabId === activeTab">
           <ng-container [ngTemplateOutlet]="content.template"></ng-container>
