@@ -1,8 +1,9 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, Input, signal, type OnInit } from "@angular/core";
-import { CircleQuestionMark, LucideAngularModule } from "lucide-angular";
+import { CircleQuestionMark, LucideAngularModule, CheckIcon,CopyIcon } from "lucide-angular";
 import { FormsModule } from "@angular/forms";
 import { PostService } from "../services/post.service";
+import { CardCommentComponent } from "../card-comment/card-comment.component";
 
 @Component({
     selector: 'app-card-answer',
@@ -11,6 +12,7 @@ import { PostService } from "../services/post.service";
     imports: [
         CommonModule,
         LucideAngularModule,
+        CardCommentComponent,
         FormsModule
     ]
 })
@@ -19,7 +21,7 @@ export class CardAnswerComponent implements OnInit {
     isOpen = signal(false);
 
     allAnswers = signal<{
-        id: number, body: string, created_at: string, user: { id: number, name: string }, reaction_summary: {
+        id: number, slug: string, body: string, created_at: string, user: { id: number, name: string }, reaction_summary: {
             type: 'like' | 'dislike' | 'agree' | 'disagree' | 'helpful' | 'unhelpful' | 'upvote' | 'downvote',
             count: number
             is_active: boolean
@@ -130,5 +132,5 @@ export class CardAnswerComponent implements OnInit {
 
     readonly CircleQuestionMark = CircleQuestionMark;
 
-
+    
 }

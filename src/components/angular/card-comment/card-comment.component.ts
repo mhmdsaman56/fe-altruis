@@ -1,25 +1,29 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, Input, signal, type OnInit } from "@angular/core";
-import { CircleQuestionMark, LucideAngularModule } from "lucide-angular";
+import { CheckIcon, CircleQuestionMark, CopyIcon, LucideAngularModule } from "lucide-angular";
 import { FormsModule } from "@angular/forms";
 import { PostService } from "../services/post.service";
 
 @Component({
-    selector: 'app-card-answer',
+    selector: 'app-card-comment',
     standalone: true,
-    templateUrl: './card-answer.component.html',
+    templateUrl: './card-comment.component.html',
     imports: [
         CommonModule,
         LucideAngularModule,
-        FormsModule
+        FormsModule,
     ]
 })
 export class CardCommentComponent implements OnInit {
     private postService = inject(PostService);
     isOpen = signal(false);
 
+    @Input() contentType!: string;
+
+    @Input slug : string = '';
+
     allAnswers = signal<{
-        id: number, body: string, created_at: string, user: { id: number, name: string }, reaction_summary: {
+        id: number,body: string, created_at: string, user: { id: number, name: string }, reaction_summary: {
             type: 'like' | 'dislike' | 'agree' | 'disagree' | 'helpful' | 'unhelpful' | 'upvote' | 'downvote',
             count: number
             is_active: boolean
@@ -98,20 +102,7 @@ export class CardCommentComponent implements OnInit {
         });
     }
 
-    sendAnswer(postId: number) {
-        this.postService.addAnswer(postId, this.answerBody()).subscribe({
-            next: (res) => {
-
-                this.getAllAnswers();
-                this.answerBody.set(''); 
-
-            },
-            error: (err) => {
-                console.error('Error submitting answer:', err);
-            }
-        });
-
-    }
+    
     getAllAnswers() {
         this.postService.getAllAnswers(this.postId).subscribe({
             next: (res) => {
@@ -129,6 +120,35 @@ export class CardCommentComponent implements OnInit {
     }
 
     readonly CircleQuestionMark = CircleQuestionMark;
+    
+    body = signal<string>('');
+    createComment(postId: number) {
+        this.postService.addAnswer(postId, this.body(), 'comment').subscribe({
+            next: (res) => {
 
+                this.getAllAnswers();
+                this.body.set(''); 
+                console.log('Comment submitted successfully', res);
 
+            },
+            error: (err) => {
+                console.error('Error submitting answer:', err);
+            }
+        });
+        
+    }
+    shareUrl = window.location.href;
+    copied = false;
+
+    copyLink(slug: string) {
+        navigator.clipboard.writeText(`${this.shareUrl}/${slug}`).then(() => {
+            this.copied = true;
+            setTimeout(() => {
+                this.copied = false;
+            }, 2000);
+
+    }
+)};
+   readonly CopyIcon = CopyIcon;
+   readonly CheckIcon = CheckIcon;
 }

@@ -2,12 +2,13 @@ import { CommonModule } from "@angular/common";
 import { Component, inject, Input } from "@angular/core";
 import { LucideAngularModule, CircleQuestionMark } from "lucide-angular";
 import { PostService } from "../services/post.service";
+import { CardAnswerComponent } from "../card-answer/card-answer.component";
 
 @Component({
     selector: 'app-card',
     templateUrl: './card.component.html',
     standalone: true,
-    imports: [LucideAngularModule, CommonModule]
+    imports: [LucideAngularModule, CommonModule,CardAnswerComponent]
 })
 
 
@@ -96,5 +97,6 @@ export class CardComponent {
 
    
     readonly CircleQuestionMark = CircleQuestionMark;
+    
 
 }

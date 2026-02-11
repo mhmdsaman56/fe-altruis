@@ -12,7 +12,7 @@ import { CardAnswerComponent } from "../../card-answer/card-answer.component";
 @Component({
     selector : 'app-home',
     standalone: true,
-    imports: [ CommonModule, TabsComponent, TabContentDirective, CardComponent, NavbarComponent, SidebarComponent ,FormsModule, CardAnswerComponent],
+    imports: [ CommonModule, TabsComponent, TabContentDirective, CardComponent, NavbarComponent, SidebarComponent ,FormsModule, CardAnswerComponent,],
     templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
@@ -21,6 +21,8 @@ export class HomeComponent implements OnInit {
         { label: 'Hyped Discussion', id: 'hyped_discussions' },
         { label: 'Customized By You', id: 'customized_by_you' }
     ];
+    @Input() apiUrl!: string;
+    
     questions = [
         "What are the most effective strategies for promoting mental health awareness in schools?",
         "How can technology be leveraged to improve access to education in remote areas?",
@@ -39,6 +41,7 @@ export class HomeComponent implements OnInit {
     body = signal<string>('');
 
     ngOnInit(): void {
+        
         this.postService.getPosts().subscribe({
             next: (res) => {
                 this.hypedDiscussions.set(res.payload);
@@ -52,16 +55,23 @@ export class HomeComponent implements OnInit {
 
         
     }
-
+    getPosts() {
+        this.postService.getPosts().subscribe({
+            next: (res) => {
+                this.hypedDiscussions.set(res.payload);
+                this.aroundYouDiscussions.set(res.payload);
+                this.customizedByYouDiscussions.set(res.payload);
+            },
+            error: (err) => {
+                console.error('Error fetching posts', err);
+            }
+        });
+    }
     createDiscussion() {
         this.postService.createPost(this.body()).subscribe({
             next: (res) => {
-            
-                const newDiscussion = res.payload;
-                this.aroundYouDiscussions.update(discussions => [newDiscussion, ...discussions]);
-                this.customizedByYouDiscussions.update(discussions => [newDiscussion, ...discussions]);
-                this.hypedDiscussions.update(discussions => [newDiscussion, ...discussions]);
-            
+                
+                this.getPosts();
                 this.body.set('');
             },
             error: (err) => {

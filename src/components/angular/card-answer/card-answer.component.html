@@ -1,21 +1,23 @@
 <div class="mb-3 ">
-    <div class="flex justify-end mt-2 ">
-        <button (click)="toggle()" class="btn bg-black text-white font-normal rounded-lg">
-            Answer
+    <div class="flex justify-end mt-2 gap-3">
+
+        
+        <button (click)="toggle()" class="btn  font-normal rounded-lg">
+            {{isOpen() ? 'Hide' : 'See'}} answer
         </button>
     </div>
     <div *ngIf="isOpen()" class=" bg-white p-6 rounded-lg shadow-sm border border-gray-100 mt-4">
         <h1 class="text-xl font-semibold mb-2">Answer</h1>
         <div class=" mb-5">
             <p *ngIf="allAnswers().length === 0" class="text-center text-base">
-                No answer
+                No answer found
             </p>
             <div *ngFor="let answer of allAnswers()" class="border border-gray-200 rounded-lg p-4 mb-4">
                 <div class="bg-slate-50 p-4">
-                <h1 class=" font-bold">{{answer.user.name}}</h1>
-                <p class="">
-                    {{answer.body}}
-                </p>
+                    <h1 class=" font-bold">{{answer.user.name}}</h1>
+                    <p class="">
+                        {{answer.body}}
+                    </p>
 
                 </div>
                 <div class="py-3  mt-0 flex flex-wrap gap-x-10 gap-y-4">
@@ -139,7 +141,7 @@
 
                 </div>
 
-
+                <app-card-comment  [postId]="answer.id" [contentType]="'answer'" [slug]="answer.slug"></app-card-comment>
             </div>
 
         </div>
