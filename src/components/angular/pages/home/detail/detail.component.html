@@ -1,10 +1,16 @@
-<div class=" bg-white p-6 rounded-lg  border border-gray-100">
-    <h1 class="text-xl font-semibold mb-2">Question</h1>
-    <div class="bg-slate-50 p-4 mb-5">
-        {{data.body}}
-    </div>
-
-    <div class="py-3  mt-0 flex flex-wrap gap-x-10 gap-y-4">
+<div class="flex min-h-screen w-full bg-gray-100">
+    <div class="flex flex-col w-full">
+        <app-navbar />
+        <div class="flex">
+            <app-sidebar />
+            <div class="flex-1 p-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class=" bg-white p-6 rounded-lg  border border-gray-100">
+                        <h1 class="text-xl font-semibold mb-2">Question</h1>
+                        <div class="bg-slate-50 p-4 mb-5">
+                            {{data().parent.body}}
+                        </div>
+                        <!-- <div class="py-3  mt-0 flex flex-wrap gap-x-10 gap-y-4">
         <div class="space-y-2">
             <p>Shareworthy <span>
                     <div class="dropdown dropdown-bottom">
@@ -112,8 +118,13 @@
                 </div>
             </div>
         </div>
+    </div> -->
+                    </div>
+                    <app-card-answer *ngFor="let answer of data().answers" [data]="answer"></app-card-answer>
 
-
+                </div>
+            </div>
+        </div>
     </div>
-    <app-card-answer [postId]="data.id"></app-card-answer>
+
 </div>

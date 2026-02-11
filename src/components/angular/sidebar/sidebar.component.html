@@ -1,0 +1,33 @@
+<div *ngIf="sidebar.open()" class=" bg-white w-64  flex flex-col items-center min-h-screen">
+
+    <ul class="w-full">
+        <li class="w-full py-4 pl-6 h-full" [ngClass]="{'font-bold text-white   bg-red-700 ': currentPath === '/timeline'}">
+            <a  href="/timeline">Timeline </a>
+        </li>
+        <li class="w-full h-full py-4 pl-6" [ngClass]="{'font-bold text-white   bg-red-700 ': currentPath === '/notification'}">
+            <a href="/notification">Notification</a>
+
+        </li>
+        <li class="w-full h-full py-4 pl-6" [ngClass]="{'font-bold text-white   bg-red-700 ': currentPath === '/analytics'}">
+            <a href="/analytics">Analytics</a>
+
+        </li>
+        <li class="w-full h-full py-4 pl-6" [ngClass]="{'font-bold text-white   bg-red-700 ': currentPath === '/articles'}">
+            <a href="/articles">Articles</a>
+
+        </li>
+        <li class="w-full h-full py-4 pl-6" [ngClass]="{'font-bold text-white   bg-red-700 ': currentPath === '/articles/saved'}">
+            <a href="/articles/saved">Saved Articles</a>
+
+        </li>
+        <li class="w-full h-full py-4 pl-6" [ngClass]="{'font-bold text-white   bg-red-700 ': currentPath === '/rooms'}">
+            <a href="/rooms">Rooms</a>
+
+        </li>
+
+        <li class="w-full h-full py-4 pl-6">
+            <button (click)="logout()">Logout</button>
+        </li>
+    </ul>
+
+</div>

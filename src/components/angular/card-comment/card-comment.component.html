@@ -1,0 +1,247 @@
+<div class="mb-3 ">
+    <div class="flex justify-end mt-2 gap-3">
+        <div *ngIf="contentType === 'answer'">
+            
+        
+        <label  for="share_answer_modal" class="btn bg-black text-white font-normal rounded-lg">Share answer</label>
+
+<input type="checkbox" id="share_answer_modal" class="modal-toggle" />
+<div class="modal" role="dialog">
+  <div class="modal-box rounded-2xl">
+
+  <h3 class="text-lg font-semibold mb-4">
+    Share this answer
+  </h3>
+
+  <div class="bg-base-200/50 border border-base-300 rounded-xl p-4 space-y-4">
+    <div class="flex items-center gap-2 bg-base-100 border border-base-300 rounded-lg p-2">
+      <input
+        #linkInput
+        type="text"
+        [value]="   shareUrl + '/' + slug"
+        readonly
+        (click)="selectText(linkInput)"
+        class="flex-1 bg-transparent text-sm focus:outline-none px-2"
+      />
+
+      <button
+        (click)="copyLink(slug)"
+        class="btn btn-sm btn-primary gap-2"
+      >
+        <lucide-icon size="16" [img]="CopyIcon"></lucide-icon>
+        Copy
+      </button>
+    </div>
+
+      <div *ngIf="copied"
+      class="text-sm text-success flex items-center justify-center gap-2">
+      <lucide-icon size="16" [img]="CheckIcon"></lucide-icon>
+      Copied to clipboard
+    </div>
+    <div class="flex gap-3 justify-center">
+      <a
+        [href]="'https://wa.me/?text=' + shareUrl"
+        target="_blank"
+        class="btn btn-sm btn-outline"
+      >
+        WhatsApp
+      </a>
+
+      <a
+        [href]="'https://twitter.com/intent/tweet?url=' + shareUrl"
+        target="_blank"
+        class="btn btn-sm btn-outline"
+      >
+        Twitter
+      </a>
+
+      <a
+        [href]="'https://www.linkedin.com/sharing/share-offsite/?url=' + shareUrl"
+        target="_blank"
+        class="btn btn-sm btn-outline"
+      >
+        LinkedIn
+      </a>
+    </div>
+
+
+</div>
+
+
+  
+</div>
+    
+  <label  class="modal-backdrop" for="share_answer_modal">Close</label>
+</div>
+</div>
+<div *ngIf="contentType === 'comment'">
+
+
+<label  for="share_comment_modal" class="btn bg-black text-white font-normal rounded-lg">Share comment</label>
+
+<input type="checkbox" id="share_comment_modal" class="modal-toggle" />
+<div class="modal" role="dialog">
+  <div class="modal-box">
+    <h3 class="text-lg font-bold">Hello!</h3>
+    <p class="py-4">This modal works with a hidden checkbox!</p>
+  </div>
+  <label class="modal-backdrop" for="share_comment_modal">Close</label>
+</div>
+</div>
+        
+        <button (click)="toggle()" class="btn  font-normal rounded-lg">
+            {{isOpen() ? 'Hide' : 'See'}} comment
+        </button>
+    </div>
+    <div *ngIf="isOpen()" class=" bg-white p-6 rounded-lg shadow-sm border border-gray-100 mt-4">
+        <div class=" mb-5">
+            <p *ngIf="allAnswers().length === 0" class="text-center text-base">
+                No comment found
+            </p>
+            <div *ngFor="let answer of allAnswers()" >
+                <div class="" class="border border-gray-200 rounded-lg p-4 mb-4">
+
+                    <div class="bg-slate-50 p-4">
+                    <h1 class=" font-bold">{{answer.user.name}}</h1>
+                    <p class="">
+                        {{answer.body}}
+                    </p>
+    
+                    </div>
+                    <div class="py-3  mt-0 flex gap-5  gap-5-4">
+                        <div class="space-y-2">
+                            <p class="">Shareworthy <span>
+                                    <div class="dropdown dropdown-bottom">
+                                        <div tabindex="0" role="button" class="hover:cursor-pointer"><lucide-icon size="16"
+                                                [img]="CircleQuestionMark"></lucide-icon></div>
+                                        <div tabindex="-1"
+                                            class="dropdown-content menu bg-base-100 rounded-box z-1 w-60 p-2 shadow-sm">
+                                            If it's worth it -> Upvote <br>
+                                            If it's not worth it -> Downvote
+                                        </div>
+                                    </div>
+                                </span></p>
+    
+    
+    
+                            <div class="flex  items-center gap-5  ">
+                                <div class="text-center">
+                                    <p [ngClass]="{'text-red-700': getReaction(answer, 'upvote').is_active}"
+                                        class="text-gray-500 text-sm">{{getReaction(answer, 'upvote').count}}</p>
+                                    <button class="hover:cursor-pointer  font-medium "
+                                        [ngClass]="{'text-red-700': getReaction(answer, 'upvote').is_active}"
+                                        (click)="addReaction(answer, 'upvote')">
+                                        Upvote
+                                    </button>
+                                </div>
+    
+                                <div class="text-center">
+                                    <p [ngClass]="{'text-red-700': getReaction(answer, 'downvote').is_active}"
+                                        class="text-gray-500 text-sm">{{getReaction(answer, 'downvote').count}}</p>
+                                    <button class="hover:cursor-pointer  font-medium"
+                                        [ngClass]="{'text-red-700': getReaction(answer, 'downvote').is_active}"
+                                        (click)="addReaction(answer, 'downvote')">
+                                        Downvote
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="border-l border-gray-300"></span>
+                        <div class="space-y-2">
+                            <p class="">Reflection
+                                <span>
+                                    <div class="dropdown dropdown-bottom">
+                                        <div tabindex="0" role="button" class="hover:cursor-pointer"><lucide-icon size="16"
+                                                [img]="CircleQuestionMark"></lucide-icon></div>
+                                        <div tabindex="-1"
+                                            class="dropdown-content menu bg-base-100 rounded-box z-1 w-96 p-2 shadow-sm">
+                                            Practice to reflect and mindful about online opinion <br>
+                                            You might LIKE something but DISAGREE <br>
+                                            with it and still think this post is HELPFUL
+    
+    
+                                        </div>
+                                    </div>
+                                </span>
+                            </p>
+                            <div class="flex items-center gap-5">
+                                <div class="text-center">
+                                    <p [ngClass]="{'text-red-700': getReaction(answer, 'like').is_active}"
+                                        class="text-gray-500 text-sm">{{getReaction(answer, 'like').count}}</p>
+                                    <button class="hover:cursor-pointer  font-medium"
+                                        [ngClass]="{'text-red-700': getReaction(answer, 'like').is_active}"
+                                        (click)="addReaction(answer, 'like')">
+                                        Like
+                                    </button>
+                                </div>
+    
+                                <div class="text-center">
+                                    <p [ngClass]="{'text-red-700': getReaction(answer, 'dislike').is_active}"
+                                        class="text-gray-500 text-sm">{{getReaction(answer, 'dislike').count}}</p>
+                                    <button class="hover:cursor-pointer  font-medium"
+                                        [ngClass]="{'text-red-700': getReaction(answer, 'dislike').is_active}"
+                                        (click)="addReaction(answer, 'dislike')">
+                                        Dislike
+                                    </button>
+                                </div>
+    
+                                <div class="text-center">
+                                    <p [ngClass]="{'text-red-700': getReaction(answer, 'agree').is_active}"
+                                        class="text-gray-500 text-sm">{{getReaction(answer, 'agree').count}}</p>
+                                    <button class="hover:cursor-pointer  font-medium"
+                                        [ngClass]="{'text-red-700': getReaction(answer, 'agree').is_active}"
+                                        (click)="addReaction(answer, 'agree')">
+                                        Agree
+                                    </button>
+                                </div>
+    
+                                <div class="text-center">
+                                    <p [ngClass]="{'text-red-700': getReaction(answer, 'disagree').is_active}"
+                                        class="text-gray-500 text-sm">{{getReaction(answer, 'disagree').count}}</p>
+                                    <button class="hover:cursor-pointer  font-medium"
+                                        [ngClass]="{'text-red-700': getReaction(answer, 'disagree').is_active}"
+                                        (click)="addReaction(answer, 'disagree')">
+                                        Disagree
+                                    </button>
+                                </div>
+    
+                                <div class="text-center">
+                                    <p [ngClass]="{'text-red-700': getReaction(answer, 'helpful').is_active}"
+                                        class="text-gray-500 text-sm">{{getReaction(answer, 'helpful').count}}</p>
+                                    <button class="hover:cursor-pointer  font-medium"
+                                        [ngClass]="{'text-red-700': getReaction(answer, 'helpful').is_active}"
+                                        (click)="addReaction(answer, 'helpful')">
+                                        Helpful
+                                    </button>
+                                </div>
+    
+                                <div class="text-center">
+                                    <p [ngClass]="{'text-red-700': getReaction(answer, 'unhelpful').is_active}"
+                                        class="text-gray-500 text-sm">{{getReaction(answer, 'unhelpful').count}}</p>
+                                    <button class="hover:cursor-pointer  font-medium"
+                                        [ngClass]="{'text-red-700': getReaction(answer, 'unhelpful').is_active}"
+                                        (click)="addReaction(answer, 'unhelpful')">
+                                        Unhelpful
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+                <app-card-comment  [postId]="answer.id" [contentType]="'comment'" [slug]="answer.slug"></app-card-comment>
+
+            </div>
+
+        </div>
+
+        <fieldset class="fieldset w-full">
+            <legend class="fieldset-legend text-base">What is your comment?</legend>
+            <textarea [(ngModel)]="body" class="textarea h-24 w-full" placeholder=""></textarea>
+
+        </fieldset>
+        <div class="flex justify-end">
+            <button (click)="createComment( postId )" class="bg-red-700 text-white btn rounded-lg mt-2">Send</button>
+        </div>
+    </div>
+</div>

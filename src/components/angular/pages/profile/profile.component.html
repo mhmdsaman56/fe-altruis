@@ -1,0 +1,68 @@
+<div class="flex min-h-screen w-full bg-gray-100">
+    <div class="flex flex-col w-full">
+        <app-navbar />
+
+        <div class="flex">
+            <app-sidebar />
+            <div class="flex-1 p-6">
+                <div class="max-w-4xl mx-auto">
+                    <div class="card lg:card-side bg-base-100 shadow-sm p-10 mb-5">
+                        <figure>
+
+                            <img class="rounded-full w-40"
+                                src="https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.webp"
+                                alt="Album" />
+                        </figure>
+                        <div class="card-body">
+                            <h2 class="card-title">Muhamad Saman</h2>
+                            <div class="flex mt-4 ">
+                                <p><span>1</span> Liked</p>
+                                <p><span>2</span> Agreed</p>
+                                <p><span>3</span> Helpful</p>
+                                <p><span>4</span> Followers</p>
+                            </div>
+                            <div class="card-actions justify-end">
+                                <!-- <button class="btn btn-primary">Listen</button> -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <app-tabs [tabs]="tabs">
+                        <ng-template appTabContent="answers">
+                            <div class="flex flex-col gap-3">
+                                nanbsanbsa
+                            </div>
+                        </ng-template>
+                        <ng-template appTabContent="articles">
+                            <div class="flex flex-col gap-3">
+                                <a href="/articles/new" class="btn btn-neutral w-40">Add Article</a>
+                                <div *ngFor="let article of articles()" class="card lg:card-side bg-base-100 shadow-sm p-3 mb-1">
+                                  
+                                    <div  class="card-body space-y-2">
+                                        <h2 class="card-title">{{ article.title }}</h2>
+                                        <p [innerHTML]="article.content"></p>
+                                        <div class="card-actions justify-end gap-3">
+                                            <a target="_blank" class="btn btn-neutral" [href]="'/articles/' + article.slug">Detail</a>
+                                            <button class="btn">Edit</button>
+                                        </div>
+                                        
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </ng-template>
+                        <ng-template appTabContent="media">
+                            <div class="flex flex-col gap-3">
+                                <p>sanbsanb</p>
+                            </div>
+                        </ng-template>
+                    </app-tabs>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

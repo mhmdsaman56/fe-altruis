@@ -1,0 +1,12 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+import { HomeDetailComponent } from "../../components/angular/pages/home/detail/detail.component";
+
+const { slug } = Astro.params;
+
+---
+
+<Layout>
+    <HomeDetailComponent client:only slug={slug} />
+</Layout>

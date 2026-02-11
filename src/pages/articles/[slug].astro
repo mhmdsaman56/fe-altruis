@@ -1,0 +1,9 @@
+---
+import { DetailArticleComponent } from "../../components/angular/pages/article/detail/detail.component";
+import Layout from "../../layouts/Layout.astro";
+
+const { slug } = Astro.params;
+---
+<Layout>
+    <DetailArticleComponent slug={slug} client:only />
+</Layout>
