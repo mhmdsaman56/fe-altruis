@@ -10,6 +10,15 @@ export class AuthService {
             access_token: string;
         }}>(`${this.baseUrl}/auth/login`, {email, password});
     }
+     handleGoogleLogin(token: string) {
+        return this.http.post<{payload : {
+            access_token: string;
+        }}>(`${this.baseUrl}/auth/google`, {token }, {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            })
+        })  ;
+    }
     register(name: string, email: string, password: string, password_confirmation: string) {
         return this.http.post<{payload : {
             access_token: string;
@@ -17,6 +26,7 @@ export class AuthService {
         ;
             
     }
+    
 
     logout() {
         return this.http.post(`${this.baseUrl}/auth/logout`, {

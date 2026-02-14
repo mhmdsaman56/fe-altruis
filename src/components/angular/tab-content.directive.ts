@@ -1,4 +1,4 @@
-import { Directive, Input, TemplateRef } from '@angular/core';
+import { Directive,  Input,  TemplateRef } from '@angular/core';
 
 @Directive({
 
@@ -8,5 +8,8 @@ import { Directive, Input, TemplateRef } from '@angular/core';
 export class TabContentDirective {
   @Input('appTabContent') tabId: string = '';
 
+  
   constructor(public template: TemplateRef<any>) {}
+
+  
 }

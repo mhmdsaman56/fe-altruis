@@ -12,7 +12,7 @@ import { CardAnswerComponent } from "../../card-answer/card-answer.component";
 @Component({
     selector : 'app-home',
     standalone: true,
-    imports: [ CommonModule, TabsComponent, TabContentDirective, CardComponent, NavbarComponent, SidebarComponent ,FormsModule, CardAnswerComponent,],
+    imports: [ CommonModule, TabsComponent, TabContentDirective, CardComponent, NavbarComponent ,SidebarComponent,FormsModule, CardAnswerComponent],
     templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
@@ -22,15 +22,6 @@ export class HomeComponent implements OnInit {
         { label: 'Customized By You', id: 'customized_by_you' }
     ];
     @Input() apiUrl!: string;
-    
-    questions = [
-        "What are the most effective strategies for promoting mental health awareness in schools?",
-        "How can technology be leveraged to improve access to education in remote areas?",
-        "What role does community involvement play in successful environmental conservation efforts?",
-        "How can we address the challenges of food insecurity in urban areas?",
-        "What are the best practices for fostering inclusivity and diversity in the workplace?"
-        
-    ];
 
     private postService = inject(PostService);
 

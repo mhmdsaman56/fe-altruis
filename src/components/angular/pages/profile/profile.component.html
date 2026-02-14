@@ -40,7 +40,7 @@
                                   
                                     <div  class="card-body space-y-2">
                                         <h2 class="card-title">{{ article.title }}</h2>
-                                        <p [innerHTML]="article.content"></p>
+                                        <p [innerHTML]="article.body"></p>
                                         <div class="card-actions justify-end gap-3">
                                             <a target="_blank" class="btn btn-neutral" [href]="'/articles/' + article.slug">Detail</a>
                                             <button class="btn">Edit</button>

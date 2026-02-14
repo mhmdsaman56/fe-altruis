@@ -1,9 +1,7 @@
 import { Component, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import  { SidebarStore } from "./sidebar.store";
+import { SidebarStore } from "./sidebar.store";
 import { AuthService } from "../services/auth.service";
-
-
 
 @Component({
     selector: 'app-sidebar',
@@ -12,10 +10,9 @@ import { AuthService } from "../services/auth.service";
     templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent {
-    
-    
-    constructor(public sidebar: SidebarStore) {}
+     
 
+    public sidebar = inject(SidebarStore);
     private authService = inject(AuthService);
     logout(){
         localStorage.removeItem('access_token');

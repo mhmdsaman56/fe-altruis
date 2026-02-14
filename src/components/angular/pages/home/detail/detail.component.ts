@@ -2,17 +2,17 @@ import { Component, inject, Input, signal, type OnInit } from "@angular/core";
 import { TabsComponent } from "../../../tabs.component";
 import { CommonModule } from "@angular/common";
 import { TabContentDirective } from "../../../tab-content.directive";
-import { CardComponent } from "../../../card/card.component";
+import { CardComponent } from "./components/card/card.component";
 import { NavbarComponent } from "../../../navbar/navbar.component";
 import { SidebarComponent } from "../../../sidebar/sidebar.component";
 import { PostService } from "../../../services/post.service";
 import { FormsModule } from "@angular/forms";
-import { CardAnswerComponent } from "../../../card-answer/card-answer.component";
+import { CardAnswerComponent } from "./components/card-answer/card-answer.component";
 
 @Component({
     selector : 'app-home-detail',
     standalone: true,
-    imports: [ CommonModule, TabsComponent, TabContentDirective, CardComponent, NavbarComponent, SidebarComponent ,FormsModule, CardAnswerComponent,],
+    imports: [ CommonModule, TabsComponent, TabContentDirective, CardComponent, NavbarComponent, SidebarComponent ,FormsModule, CardComponent,  CardAnswerComponent],
     templateUrl: './detail.component.html'
 })
 export class HomeDetailComponent implements OnInit {
@@ -26,17 +26,15 @@ export class HomeDetailComponent implements OnInit {
     data = signal<{
         id: number,
         body: string,
-        parent: {
-            body: string
-        }
+        created_at: string,
+        reaction_summary: {
+            type: 'like' | 'dislike' | 'agree' | 'disagree' | 'helpful' | 'unhelpful' | 'upvote' | 'downvote',
+            count: number,
+            is_active: boolean
+        }[]
+        
        
-    } >({
-        id: 0,
-        body: '',
-        parent: {
-            body: ''
-        }
-    });
+    } >({} as any);
     
   
     private postService = inject(PostService);
@@ -45,24 +43,8 @@ export class HomeDetailComponent implements OnInit {
         this.detailDiscussion();
     }  
 
- 
-    
-
-    addReaction(postId: number, reactionType: string) {
-
-        this.postService.addReaction(postId, reactionType).subscribe({
-            next: (res) => {
-                
-            },
-            error: (err) => {
-                console.error('Error adding reaction', err);
-            }
-        });
-    }
-
 
      detailDiscussion() {
-        console.log('Fetching detail for slug:', this.slug);
         this.postService.detailDiscussion(this.slug).subscribe({
             next: (res) => {
                 console.log('Discussion detail fetched successfully', res);

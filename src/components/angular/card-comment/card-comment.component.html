@@ -75,16 +75,73 @@
 </div>
 </div>
 <div *ngIf="contentType === 'comment'">
-
-
 <label  for="share_comment_modal" class="btn bg-black text-white font-normal rounded-lg">Share comment</label>
 
 <input type="checkbox" id="share_comment_modal" class="modal-toggle" />
 <div class="modal" role="dialog">
-  <div class="modal-box">
-    <h3 class="text-lg font-bold">Hello!</h3>
-    <p class="py-4">This modal works with a hidden checkbox!</p>
-  </div>
+  <div class="modal-box rounded-2xl">
+
+  <h3 class="text-lg font-semibold mb-4">
+    Share this answer
+  </h3>
+
+  <div class="bg-base-200/50 border border-base-300 rounded-xl p-4 space-y-4">
+    <div class="flex items-center gap-2 bg-base-100 border border-base-300 rounded-lg p-2">
+      <input
+        #linkInput
+        type="text"
+        [value]="   shareUrl + '/' + slug"
+        readonly
+        (click)="selectText(linkInput)"
+        class="flex-1 bg-transparent text-sm focus:outline-none px-2"
+      />
+
+      <button
+        (click)="copyLink(slug)"
+        class="btn btn-sm btn-primary gap-2"
+      >
+        <lucide-icon size="16" [img]="CopyIcon"></lucide-icon>
+        Copy
+      </button>
+    </div>
+
+      <div *ngIf="copied"
+      class="text-sm text-success flex items-center justify-center gap-2">
+      <lucide-icon size="16" [img]="CheckIcon"></lucide-icon>
+      Copied to clipboard
+    </div>
+    <div class="flex gap-3 justify-center">
+      <a
+        [href]="'https://wa.me/?text=' + shareUrl"
+        target="_blank"
+        class="btn btn-sm btn-outline"
+      >
+        WhatsApp
+      </a>
+
+      <a
+        [href]="'https://twitter.com/intent/tweet?url=' + shareUrl"
+        target="_blank"
+        class="btn btn-sm btn-outline"
+      >
+        Twitter
+      </a>
+
+      <a
+        [href]="'https://www.linkedin.com/sharing/share-offsite/?url=' + shareUrl"
+        target="_blank"
+        class="btn btn-sm btn-outline"
+      >
+        LinkedIn
+      </a>
+    </div>
+
+
+</div>
+
+
+  
+</div>
   <label class="modal-backdrop" for="share_comment_modal">Close</label>
 </div>
 </div>
