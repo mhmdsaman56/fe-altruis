@@ -1,14 +1,73 @@
- <div class="flex min-h-screen w-full bg-gray-100">
-            <div class="flex flex-col w-full">
-                <app-navbar />
-                <div class="flex">
-                    <app-sidebar />
-                    <div class="flex-1 p-6">
-                        <div class="max-w-4xl mx-auto">
-                            Under Development
-                        </div>
-                    </div>
+<div class="flex min-h-screen w-full bg-gray-100">
+    <div class="flex flex-col w-full">
+        <app-navbar />
+        <div class="flex">
+            <app-sidebar />
+            <div class="flex-1 p-6">
+                <div class="max-w-4xl mx-auto">
+
+                    <app-tabs [tabs]="tabs"  (tabChange)="onTabChange($event)">
+                        <ng-template appTabContent="your_questions">
+                            <div *ngFor="let item of data()" class="flex flex-col gap-3 text-black">
+                                <div class="card w-full bg-base-100 card-md shadow-sm">
+                                    <div class="card-body">
+                                        <p>
+                                           {{item.data.actor}} answered your post "{{item.data.post_body}}"</p>
+                                        <div class="justify-between card-actions">
+                                            <p class="text-gray-500">{{item.created_at_formatted}}</p>
+                                            <button class="btn btn-neutral">See Question</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template appTabContent="your_answers">
+                            <div  *ngFor="let item of data()" class="flex flex-col gap-3">
+                                <div class="card w-full bg-base-100 card-md shadow-sm">
+                                    <div class="card-body">
+                                        <h2 class="card-title">Medium Card</h2>
+                                        <p>A card component has a figure, a body part, and inside body there are title
+                                            and actions parts</p>
+                                        <div class="justify-end card-actions">
+                                            <button class="btn btn-primary">Buy Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template appTabContent="your_articles">
+                            <div  *ngFor="let item of data()" class="flex flex-col gap-3">
+                                <div class="card w-full bg-base-100 card-md shadow-sm">
+                                    <div class="card-body">
+                                        <h2 class="card-title">Medium Card</h2>
+                                        <p>A card component has a figure, a body part, and inside body there are title
+                                            and actions parts</p>
+                                        <div class="justify-end card-actions">
+                                            <button class="btn btn-primary">Buy Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template appTabContent="from_altruis">
+                            <div *ngFor="let item of data()" class="flex flex-col gap-3">
+                                <div class="card w-full bg-base-100 card-md shadow-sm">
+                                    <div class="card-body">
+                                        <h2 class="card-title">Medium Card</h2>
+                                        <p>A card component has a figure, a body part, and inside body there are title
+                                            and actions parts</p>
+                                        <div class="justify-end card-actions">
+                                            <button class="btn btn-primary">Buy Now</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </app-tabs>
+
+
                 </div>
             </div>
         </div>
-    
+    </div>
+</div>

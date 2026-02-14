@@ -1,13 +1,11 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
-import { string } from "astro:schema";
-import { config } from "../../../config";
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
-    
+
     private http = inject(HttpClient);
-    
+
     private baseUrl = import.meta.env.PUBLIC_API_URL;
 
     getHeaders(): HttpHeaders {
@@ -17,7 +15,7 @@ export class PostService {
         });
     }
     getPosts() {
-        
+
 
         return this.http.get<{
             payload: {
@@ -39,34 +37,39 @@ export class PostService {
 
     }
 
-    createPost( body: string) {
+    createPost(body: string) {
         return this.http.post<{ payload: { id: number, body: string, created_at: string, reaction_counts: { like: number; dislike: number; agree: number; disagree: number; helpful: number; unhelpful: number; upvote: number; downvote: number } } }>(`${this.baseUrl}/posts`, { body }, {
             headers: this.getHeaders()
         });
     }
 
     addReaction(postId: number, reactionType: string) {
-        return this.http.post(`${this.baseUrl}/posts/${postId}/reactions`, { type: reactionType }, {
-            headers: this.getHeaders()
-        });
-    }
+
+    const url = `${this.baseUrl}/posts/${postId}/reactions`;
+    return this.http.post(url, { type: reactionType }, {
+        headers: this.getHeaders()
+    });
+}
+
 
     addAnswer(postId: number, answerBody: string, contentType: string = 'answer') {
         return this.http.post<{
-            payload: { id: number, body: string, created_at: string, user: {
-                id: number,
-                name: string
-            }, reaction_summary: {
-                type: 'like' | 'dislike' | 'agree' | 'disagree' | 'helpful' | 'unhelpful' | 'upvote' | 'downvote',
-                count: number
-                is_active: boolean
-            }[] }, 
+            payload: {
+                id: number, body: string, created_at: string, user: {
+                    id: number,
+                    name: string
+                }, reaction_summary: {
+                    type: 'like' | 'dislike' | 'agree' | 'disagree' | 'helpful' | 'unhelpful' | 'upvote' | 'downvote',
+                    count: number
+                    is_active: boolean
+                }[]
+            },
         }>(`${this.baseUrl}/posts/${postId}/answers`, { body: answerBody, content_type: contentType }, {
             headers: this.getHeaders()
         });
     }
 
-    getAllAnswers( postId: number) {
+    getAllAnswers(postId: number) {
         return this.http.get<{
             payload: {
                 id: number, slug: string, body: string, created_at: string, user: {
@@ -87,9 +90,12 @@ export class PostService {
         console.log('Detail discussion called with slug:', slug);
         return this.http.get<{
             payload: {
-                id: number, body:string,parent: {
-                    body: string
-                }}
+                id: number, body: string, created_at: string, reaction_summary: {
+                    type: 'like' | 'dislike' | 'agree' | 'disagree' | 'helpful' | 'unhelpful' | 'upvote' | 'downvote',
+                    count: number,
+                    is_active: boolean
+                }[]
+            }
         }>(`${this.baseUrl}/posts/${slug}`, {
             headers: this.getHeaders()
         });

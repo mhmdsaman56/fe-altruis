@@ -1,41 +1,29 @@
 import { CommonModule } from "@angular/common";
 import { Component, inject, Input, signal, type OnInit } from "@angular/core";
-import { CheckIcon, CircleQuestionMark, CopyIcon, LucideAngularModule } from "lucide-angular";
+import { CircleQuestionMark, LucideAngularModule } from "lucide-angular";
 import { FormsModule } from "@angular/forms";
-import { PostService } from "../services/post.service";
+import { PostService } from "../../../../../services/post.service";
+import { CardCommentComponent } from "../../../../../card-comment/card-comment.component";
 
 @Component({
-    selector: 'app-card-comment',
+    selector: 'detail-card-answer',
     standalone: true,
-    templateUrl: './card-comment.component.html',
+    templateUrl: './card-answer.component.html',
     imports: [
         CommonModule,
         LucideAngularModule,
-        FormsModule,
+        CardCommentComponent,
+        FormsModule
     ]
 })
-export class CardCommentComponent implements OnInit {
+export class CardAnswerComponent  {
     private postService = inject(PostService);
-    isOpen = signal(false);
-
-    @Input() contentType!: string;
-
-    @Input slug : string = '';
-
-    allAnswers = signal<{
-        id: number,body: string, created_at: string, user: { id: number, name: string }, reaction_summary: {
-            type: 'like' | 'dislike' | 'agree' | 'disagree' | 'helpful' | 'unhelpful' | 'upvote' | 'downvote',
-            count: number
-            is_active: boolean
-        }[]
-    }[]>([]);
-
-    @Input() postId!: number;
 
 
-    toggle() {
-        this.isOpen.update(value => !value);
-    }
+
+    @Input() 
+    data : { id: number, body: string } = { id: 0, body: '' };
+
 
 
     answerBody = signal<string>('');
@@ -102,53 +90,8 @@ export class CardCommentComponent implements OnInit {
         });
     }
 
-    
-    getAllAnswers() {
-        this.postService.getAllAnswers(this.postId).subscribe({
-            next: (res) => {
-                console.log('Answers fetched successfully', res);
-                this.allAnswers.set(res.payload);
-            },
-            error: (err) => {
-                console.error('Error fetching answers', err);
-            }
-        });
-    }
-
-    ngOnInit(): void {
-        this.getAllAnswers();
-    }
 
     readonly CircleQuestionMark = CircleQuestionMark;
+
     
-    body = signal<string>('');
-    createComment(postId: number) {
-        this.postService.addAnswer(postId, this.body(), 'comment').subscribe({
-            next: (res) => {
-
-                this.getAllAnswers();
-                this.body.set(''); 
-                console.log('Comment submitted successfully', res);
-
-            },
-            error: (err) => {
-                console.error('Error submitting answer:', err);
-            }
-        });
-        
-    }
-    shareUrl = window.location.host + '/timeline';
-    copied = false;
-
-    copyLink(slug: string) {
-        navigator.clipboard.writeText(`${this.shareUrl}/${slug}`).then(() => {
-            this.copied = true;
-            setTimeout(() => {
-                this.copied = false;
-            }, 2000);
-
-    }
-)};
-   readonly CopyIcon = CopyIcon;
-   readonly CheckIcon = CheckIcon;
 }

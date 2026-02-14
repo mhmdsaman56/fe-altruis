@@ -2,46 +2,23 @@
         <h1 class="text-lg font-bold">Create an account</h1>
         <p>Enter your information below to create your account</p>
     </div>
-    <div>
-        <label class="font-medium" for="fullName">Full Name</label>
-        <input
-            class="border w-full rounded-md p-2 mt-1"
-            type="text"
-            placeholder="Your full name"
-            id="fullName"
-            [(ngModel)]="name"
-        />
-    </div>
-    <div>
-        <label class="font-medium" for="email">Email</label>
-        <input
-            class="border w-full rounded-md p-2 mt-1"
-            type="text"
-            placeholder="Your email"
-            id="email"
-            [(ngModel)]="email"
-        />
-    </div>
-    <div>
-        <label class="font-medium" for="password">Password</label>
-        <input
-            class="border w-full rounded-md p-2 mt-1"
-            type="password"
-            placeholder="Your password"
-            id="password"
-            [(ngModel)]="password"
-        />
-    </div>
-        <div>
-        <label class="font-medium" for="passwordConfirmation">Password Confirmation</label>
-        <input
-            class="border w-full rounded-md p-2 mt-1"
-            type="password"
-            placeholder="Confirm your password"
-            id="passwordConfirmation"
-            [(ngModel)]="password_confirmation"
-        />
-    </div>
+    <fieldset class="fieldset">
+    <legend class="fieldset-legend">Full Name</legend>
+    <input type="text" class="input w-full" placeholder="Type here" [(ngModel)]="name" />
+</fieldset>
+<fieldset class="fieldset">
+    <legend class="fieldset-legend">Email</legend>
+    <input type="email" class="input w-full" placeholder="Type here" [(ngModel)]="email" />
+</fieldset>
+<fieldset class="fieldset">
+    <legend class="fieldset-legend">Password</legend>
+    <input type="password" class="input w-full" placeholder="Type here" [(ngModel)]="password" />
+</fieldset>
+<fieldset class="fieldset">
+    <legend class="fieldset-legend">Password Confirmation</legend>
+    <input type="password" class="input w-full" placeholder="Type here" [(ngModel)]="password_confirmation" />
+</fieldset>
+       
     <p *ngIf="error()" class="text-red-500 text-sm">{{ error() }}</p>
     <div class="flex flex-col gap-3">
         <button 
@@ -49,10 +26,11 @@
         class="bg-black text-white rounded-lg p-2" [disabled]="loading()"
             (click)="register()">{{ loading() ? 'Registering...' : 'Create Account' }}</button
         >
-        <button
-            class="bg-white text-black border border-slate-500 rounded-lg p-2"
-            >Sign up with google</button
-        >
+        <button (click)="loginWithGoogle()"  class="btn bg-white text-black border-[#e5e5e5]">
+  <svg aria-label="Google logo" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><g><path d="m0 0H512V512H0" fill="#fff"></path><path fill="#34a853" d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"></path><path fill="#4285f4" d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"></path><path fill="#fbbc02" d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"></path><path fill="#ea4335" d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"></path></g></svg>
+  Sign up with google
+</button>
+        
         <p class="text-center text-slate-500">
             Already have an account? <a href="/login" class="underline"
                 >Log in</a>

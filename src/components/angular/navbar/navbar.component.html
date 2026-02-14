@@ -21,12 +21,10 @@
         
         <div class="dropdown dropdown-bottom dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost"><lucide-icon [img]="Bell" size="24" /></div>
-            <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-80 p-2 shadow-sm">
-                <li><p>Noel membuat pertanyaan</p></li>
-                <li><p>Saka memberikan komentar</p></li>
-                <li><p>Test membuat notifikasi 1</p></li>
-                <li><p>Test membuat notifikasi 2</p></li>
-                <li><p>Test membuat notifikasi 3</p></li>
+            <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-10 w-96  shadow-sm">
+                <li class="font-bold text-lg mb-1"><p>Notifications</p></li>
+                <li *ngFor="let notification of data() "><p class="text-justify" *ngIf="notification.type === 'answer'">{{notification.data.actor}} answered your post "{{notification.data.post_body}}"</p></li>
+
 
                 <li ><a href="/notification" class="block text-center underline">See all notifications</a></li>
             </ul>

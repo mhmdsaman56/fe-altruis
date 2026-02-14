@@ -1,0 +1,141 @@
+<div class="mb-3 ">
+    <div class=" bg-white p-6 rounded-lg shadow-sm border border-gray-100 mt-4">
+        
+        <h1 class="text-xl font-semibold mb-2">Answer</h1>
+        <div class=" mb-5">
+            
+            <div *ngIf="data" class="border border-gray-200 rounded-lg p-4 mb-4">
+                <div class="bg-slate-50 p-4">
+                    <h1 class=" font-bold">{{data.user.name}}</h1>
+                    <p class="">
+                        {{data.body}}
+                    </p>
+                    
+                </div>
+                <div class="py-3  mt-0 flex flex-wrap gap-x-10 gap-y-4">
+                    <div class="space-y-2">
+                        <p class="">Shareworthy <span>
+                                <div class="dropdown dropdown-bottom">
+                                    <div tabindex="0" role="button" class="hover:cursor-pointer"><lucide-icon size="16"
+                                            [img]="CircleQuestionMark"></lucide-icon></div>
+                                    <div tabindex="-1"
+                                        class="dropdown-content menu bg-base-100 rounded-box z-1 w-60 p-2 shadow-sm">
+                                        If it's worth it -> Upvote <br>
+                                        If it's not worth it -> Downvote
+                                    </div>
+                                </div>
+                            </span></p>
+
+
+
+                        <div class="flex items-center space-x-8">
+                            <div class="text-center">
+                                <p [ngClass]="{'text-red-700': getReaction(data, 'upvote').is_active}"
+                                    class="text-gray-500 text-sm">{{getReaction(data, 'upvote').count}}</p>
+                                <button class="hover:cursor-pointer  font-medium "
+                                    [ngClass]="{'text-red-700': getReaction(data, 'upvote').is_active}"
+                                    (click)="addReaction(data, 'upvote')">
+                                    Upvote
+                                </button>
+                            </div>
+
+                            <div class="text-center">
+                                <p [ngClass]="{'text-red-700': getReaction(data, 'downvote').is_active}"
+                                    class="text-gray-500 text-sm">{{getReaction(data, 'downvote').count}}</p>
+                                <button class="hover:cursor-pointer  font-medium"
+                                    [ngClass]="{'text-red-700': getReaction(data, 'downvote').is_active}"
+                                    (click)="addReaction(data, 'downvote')">
+                                    Downvote
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="border-l border-gray-300"></span>
+                    <div class="space-y-2">
+                        <p class="">Reflection
+                            <span>
+                                <div class="dropdown dropdown-bottom">
+                                    <div tabindex="0" role="button" class="hover:cursor-pointer"><lucide-icon size="16"
+                                            [img]="CircleQuestionMark"></lucide-icon></div>
+                                    <div tabindex="-1"
+                                        class="dropdown-content menu bg-base-100 rounded-box z-1 w-96 p-2 shadow-sm">
+                                        Practice to reflect and mindful about online opinion <br>
+                                        You might LIKE something but DISAGREE <br>
+                                        with it and still think this post is HELPFUL
+
+
+                                    </div>
+                                </div>
+                            </span>
+                        </p>
+                        <div class="flex items-center space-x-8">
+                            <div class="text-center">
+                                <p [ngClass]="{'text-red-700': getReaction(data, 'like').is_active}"
+                                    class="text-gray-500 text-sm">{{getReaction(data, 'like').count}}</p>
+                                <button class="hover:cursor-pointer  font-medium"
+                                    [ngClass]="{'text-red-700': getReaction(data, 'like').is_active}"
+                                    (click)="addReaction(data, 'like')">
+                                    Like
+                                </button>
+                            </div>
+
+                            <div class="text-center">
+                                <p [ngClass]="{'text-red-700': getReaction(data, 'dislike').is_active}"
+                                    class="text-gray-500 text-sm">{{getReaction(data, 'dislike').count}}</p>
+                                <button class="hover:cursor-pointer  font-medium"
+                                    [ngClass]="{'text-red-700': getReaction(data, 'dislike').is_active}"
+                                    (click)="addReaction(data, 'dislike')">
+                                    Dislike
+                                </button>
+                            </div>
+
+                            <div class="text-center">
+                                <p [ngClass]="{'text-red-700': getReaction(data, 'agree').is_active}"
+                                    class="text-gray-500 text-sm">{{getReaction(data, 'agree').count}}</p>
+                                <button class="hover:cursor-pointer  font-medium"
+                                    [ngClass]="{'text-red-700': getReaction(data, 'agree').is_active}"
+                                    (click)="addReaction(data, 'agree')">
+                                    Agree
+                                </button>
+                            </div>
+
+                            <div class="text-center">
+                                <p [ngClass]="{'text-red-700': getReaction(data, 'disagree').is_active}"
+                                    class="text-gray-500 text-sm">{{getReaction(data, 'disagree').count}}</p>
+                                <button class="hover:cursor-pointer  font-medium"
+                                    [ngClass]="{'text-red-700': getReaction(data, 'disagree').is_active}"
+                                    (click)="addReaction(data, 'disagree')">
+                                    Disagree
+                                </button>
+                            </div>
+
+                            <div class="text-center">
+                                <p [ngClass]="{'text-red-700': getReaction(data, 'helpful').is_active}"
+                                    class="text-gray-500 text-sm">{{getReaction(data, 'helpful').count}}</p>
+                                <button class="hover:cursor-pointer  font-medium"
+                                    [ngClass]="{'text-red-700': getReaction(data, 'helpful').is_active}"
+                                    (click)="addReaction(data, 'helpful')">
+                                    Helpful
+                                </button>
+                            </div>
+
+                            <div class="text-center">
+                                <p [ngClass]="{'text-red-700': getReaction(data, 'unhelpful').is_active}"
+                                    class="text-gray-500 text-sm">{{getReaction(data, 'unhelpful').count}}</p>
+                                <button class="hover:cursor-pointer  font-medium"
+                                    [ngClass]="{'text-red-700': getReaction(data, 'unhelpful').is_active}"
+                                    (click)="addReaction(data, 'unhelpful')">
+                                    Unhelpful
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <app-card-comment  [postId]="data.id" [contentType]="'answer'" [slug]="data.slug"></app-card-comment>
+            </div>
+
+        </div>
+    </div>
+</div>

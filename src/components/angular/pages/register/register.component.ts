@@ -25,7 +25,7 @@ export class RegisterComponent {
             next: (res) => {
                 this.loading.set(true);
                 this.error.set('');
-                localStorage.setItem('access_token', res.payload.access_token);
+                localStorage.setItem('token', res.payload.access_token);
                 document.cookie = `auth_token=${res.payload.access_token}; path=/; max-age=86400; SameSite=Strict`;
                 
                 window.location.href = '/timeline';

@@ -1,4 +1,4 @@
-import { Component, ContentChildren, Input, QueryList, type AfterContentInit } from "@angular/core";
+import { Component, ContentChildren, EventEmitter, Input, Output, QueryList, type AfterContentInit } from "@angular/core";
 import { TabContentDirective } from "./tab-content.directive";
 import { CommonModule } from "@angular/common";
 
@@ -33,7 +33,8 @@ import { CommonModule } from "@angular/common";
 })
 
 export class TabsComponent implements AfterContentInit {
-  
+      @Output()
+  tabChange = new EventEmitter<string>();
       @Input()
       tabs: Array<{ label: string; id: string;}> = [];
     activeTab: string = '';
@@ -49,6 +50,7 @@ export class TabsComponent implements AfterContentInit {
   }
     setTab(tabName: string) {
         this.activeTab = tabName;
+        this.tabChange.emit(tabName);
     }
     
 }
