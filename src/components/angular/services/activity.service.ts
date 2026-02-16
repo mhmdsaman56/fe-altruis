@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 
 @Injectable({ providedIn: 'root' })
-export class NotificationService {
+export class ActivityService {
         private http = inject(HttpClient);
     
     private baseUrl = import.meta.env.PUBLIC_API_URL;
@@ -15,12 +15,9 @@ export class NotificationService {
         });
     }
     
-    getNotifications( limit:number | null = null, type: string | null = null, interactionType: string | null = null, reactionType: string | null = null) {
+    getAllActivities( type: string | null = null, interactionType: string | null = null, reactionType: string | null = null) {
           let params = new HttpParams();
 
-  if (limit !== null) {
-    params = params.set('limit', limit.toString());
-  }
   if (interactionType !== null) {
     params = params.set('interaction_type', interactionType);
   }
@@ -36,16 +33,19 @@ export class NotificationService {
     params = params.set('type', type);
   }
         return this.http.get<{
-            payload: {
-                unread_count: number,
-                notifications :             {
+            payload:        {
                 id: number,
                 type: string,
-                created_at: string
+                reaction_type: string | null,
+                interaction_type: string,
+                created_at: string,
+                data : {
+                  content_body: string,
+                }
             }[]
-            }
+            
 
-        }>(`${this.baseUrl}/notifications`, {
+        }>(`${this.baseUrl}/activities`, {
             headers: this.getHeaders(),
             params: params
         });

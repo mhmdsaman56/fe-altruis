@@ -1,14 +1,15 @@
-import { Component, computed, effect, inject, signal, type OnInit } from "@angular/core";
+import { Component, computed, effect, inject, signal} from "@angular/core";
 import { NavbarComponent } from "../../navbar/navbar.component";
 import { SidebarComponent } from "../../sidebar/sidebar.component";
 import { TabsComponent } from "../../tabs.component";
 import { CommonModule } from "@angular/common";
 import { TabContentDirective } from "../../tab-content.directive";
 import { NotificationService } from "../../services/notification.service";
-import { LucideTableCellsMerge } from "lucide-angular";
+import { ActivityService } from "../../services/activity.service";
+
 
 @Component({
-    selector: 'app-notification',
+    selector: 'app-activities',
     standalone: true,
     imports: [
         CommonModule,
@@ -17,59 +18,60 @@ import { LucideTableCellsMerge } from "lucide-angular";
         TabsComponent,
         TabContentDirective,
     ],
-    templateUrl: './notification.component.html'
+    templateUrl: './activities.component.html'
 })
-export class NotificationComponent  {
+export class ActivitiesComponent  {
 
 
     reactionTabs = [
         { label: 'All', id: 'all' },
-        { label: 'Like', id: 'like' },
-        { label: 'Dislike', id: 'dislike' },
-        { label: 'Agree', id: 'agree' },
-        { label: 'Disagree', id: 'disagree' },
+        { label: 'Liked', id: 'like' },
+        { label: 'Disliked', id: 'dislike' },
+        { label: 'Agreed', id: 'agree' },
+        { label: 'Disagreed', id: 'disagree' },
         { label: 'Helpful', id: 'helpful' },
         { label: 'Unhelpful', id: 'unhelpful' },
-        { label: 'Upvote', id: 'upvote' },
-        { label: 'Downvote', id: 'downvote' },
+        { label: 'Upvoted', id: 'upvote' },
+        { label: 'Downvoted', id: 'downvote' },
     ];
     tabs = [
         {
-            label: 'Your Questions', id: 'your_questions', interactionTabs: [
+            label: 'Questions', id: 'your_questions', interactionTabs: [
+                { label: 'Reacted', id: 'reaction', reactionTabs: this.reactionTabs },
+                { label: 'Answer & Comments', id: 'answer_comments' }
+            ]
+        },
+        {
+            label: 'Answers', id: 'your_answers', interactionTabs: [
                 { label: 'Reactions', id: 'reaction', reactionTabs: this.reactionTabs },
                 { label: 'Answer & Comments', id: 'answer_comments' }
             ]
         },
         {
-            label: 'Your Answers', id: 'your_answers', interactionTabs: [
-                { label: 'Reactions', id: 'reaction', reactionTabs: this.reactionTabs },
-                { label: 'Answer & Comments', id: 'answer_comments' }
-            ]
-        },
-        {
-            label: 'Your Articles', id: 'your_articles', interactionTabs: this.reactionTabs ,
+            label: 'Articles', id: 'your_articles', interactionTabs: this.reactionTabs ,
             
         },
-        { label: 'From Altru.is', id: 'from_altruis' }
     ];
 
 
 
-    private notificationService = inject(NotificationService);
-     activeMainTab = signal('your_questions');
+    private activityService = inject(ActivityService);
+    activeMainTab = signal('your_questions');
     activeInteractionTab = signal('reaction');
     activeReactionTab = signal('all');
 
     data = signal<
-        {
-            unread_count: number,
-            notifications:
             {
                 id: number,
                 type: string,
+                reaction_type: string | null,
+                interaction_type: string,
                 created_at: string,
+                data : {
+                  content_body: string,
+                }
             }[]
-        }>({ notifications: [], unread_count: 0 });
+        >([] );
     TAB_TYPE_MAP: Record<string, string> = {
         your_questions: 'question',
         your_answers: 'answer',
@@ -81,20 +83,19 @@ export class NotificationComponent  {
     currentMainTab = computed(() => this.tabs.find(tab => tab.id === this.activeMainTab())!);
     currentInteractionTabs = computed(() => this.currentMainTab()?.interactionTabs ?? []);
     currentReactionTabs = computed(() => this.currentInteractionTabs()?.find(tab => tab.id === this.activeInteractionTab())?.reactionTabs ?? []);
-    getNotificationsByTab(type: string, interactionType: string, reactionType: string | null = null) {
+    getActivitiesByTab(type: string, interactionType: string, reactionType: string | null = null) {
 
-        this.notificationService.getNotifications(null, type, interactionType, reactionType).subscribe({
+        this.activityService.getAllActivities(type, interactionType, reactionType).subscribe({
             next: (res) => {
                 this.data.set(res.payload);
-                console.log('Fetched notifications for', { type, interactionType, reactionType }, res.payload);
+                console.log('Fetched activities for', { type, interactionType, reactionType }, res.payload);
                 
             },
             error: (err) => {
-                console.error('Error fetching notifications', err);
+                console.error('Error fetching activities', err);
             }
         });
     }
-
 
     constructor() {
         effect(() => {
@@ -102,7 +103,7 @@ export class NotificationComponent  {
             const type = this.TAB_TYPE_MAP[tabId] || 'answer';
             const interactionType = this.activeInteractionTab();
             const reactionType = this.activeReactionTab();
-            this.getNotificationsByTab(type, interactionType, reactionType);
+            this.getActivitiesByTab(type, interactionType, reactionType);
 
         });
     }

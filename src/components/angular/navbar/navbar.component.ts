@@ -30,12 +30,15 @@ export class NavbarComponent implements OnInit {
     readonly Settings = Settings;
     readonly User = User;
     readonly Bell = Bell;
-    data = signal<{
+    data = signal<{ 
+        unread_count: number,
+        notifications : 
+    {
         id: number,
         type: string,
         created_at: string,
 
-    }[]>([]);
+    }[]}>({ notifications: [], unread_count: 0 });
     private notificationService = inject(NotificationService);
     public getCurrentNotification() {
         this.notificationService.getNotifications(5).subscribe({
