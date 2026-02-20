@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
                 console.log('Login Berhasil', res);
                 // Simpan token atau redirect
                 localStorage.setItem('token', res.payload.access_token);
+                localStorage.setItem('user_id', `${res.payload.user.id}`)
                 document.cookie = `auth_token=${res.payload.access_token}; path=/; max-age=86400; SameSite=Strict`;
                 window.location.replace('/timeline');
             },
@@ -51,6 +52,7 @@ export class LoginComponent implements OnInit {
         this.auth.handleGoogleLogin(token).subscribe({
             next: (res) => {
                 localStorage.setItem('token', res.payload.access_token);
+                localStorage.setItem('user_id', `${res.payload.user.id}`)
                 document.cookie = `auth_token=${res.payload.access_token}; path=/; max-age=86400; SameSite=Strict`;
                 window.location.replace('/timeline');
             },

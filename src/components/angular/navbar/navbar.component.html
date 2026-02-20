@@ -36,4 +36,10 @@
             <lucide-icon [img]="Settings" size="24" />
         </a>
     </div>
+    
+</div>
+<div *ngIf="show()" class="toast toast-bottom toast-end">
+  <div class="alert alert-info">
+    <span>{{ message() }}</span>
+  </div>
 </div>

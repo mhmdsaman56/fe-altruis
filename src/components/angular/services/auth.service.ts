@@ -7,12 +7,18 @@ export class AuthService {
     private http = inject(HttpClient);
     login(email: string, password: string) {
         return this.http.post<{payload : {
+            user: {
+                id: number
+            }
             access_token: string;
         }}>(`${this.baseUrl}/auth/login`, {email, password});
     }
      handleGoogleLogin(token: string) {
         return this.http.post<{payload : {
             access_token: string;
+              user: {
+                id: number
+            }
         }}>(`${this.baseUrl}/auth/google`, {token }, {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json'
@@ -34,5 +40,9 @@ export class AuthService {
             'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
             'Content-Type': 'application/json'
         })});
+    }
+
+    getCurrentUser(){
+
     }
 }

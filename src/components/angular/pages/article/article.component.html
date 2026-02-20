@@ -5,126 +5,21 @@
                     <app-sidebar />
                     <div class="flex-1 p-6">
                         <div class="max-w-4xl mx-auto">
-                            <div class=" bg-white p-6 rounded-lg  border border-gray-100">
-    <h1 class="text-xl font-semibold mb-2">Question</h1>
-    <div class="bg-slate-50 p-4 mb-5">
-        {{data.body}}
-    </div>
+                            <h1 class="font-bold text-2xl mb-2">Article page</h1>
+                            <p class="mb-5">Explore our latest articles and insights.</p>
+                            <app-tabs activeTab="article_timeline" [tabs]="tabs">
 
-    <div class="py-3  mt-0 flex flex-wrap gap-x-10 gap-y-4">
-        <div class="space-y-2">
-            <p>Shareworthy <span>
-                    <div class="dropdown dropdown-bottom">
-                        <div tabindex="0" role="button" class="hover:cursor-pointer"><lucide-icon size="16"
-                                [img]="CircleQuestionMark"></lucide-icon></div>
-                        <div tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-60 p-2 shadow-sm">
-                            If it's worth it -> Upvote <br>
-                                If it's not worth it -> Downvote
-                        </div>
-                    </div>
-                </span></p>
-
-
-
-            <div class="flex items-center space-x-8">
-                <div class="text-center">
-                    <p [ngClass]="{'text-red-700': getReaction('upvote').is_active}" class="text-gray-500 text-sm">{{getReaction('upvote').count}}</p>
-                    <button class="hover:cursor-pointer  font-medium "
-                        [ngClass]="{'text-red-700': getReaction('upvote').is_active}"
-                        (click)="addReaction(data.id, 'upvote')">
-                        Upvote
-                    </button>
-                </div>
-
-                <div class="text-center">
-                    <p [ngClass]="{'text-red-700': getReaction('downvote').is_active}" class="text-gray-500 text-sm">{{getReaction('downvote').count}}</p>
-                    <button class="hover:cursor-pointer  font-medium"
-                        [ngClass]="{'text-red-700': getReaction('downvote').is_active}"
-                        (click)="addReaction(data.id, 'downvote')">
-                        Downvote
-                    </button>
-                </div>
-            </div>
-        </div>
-        <span class="border-l border-gray-300"></span>
-        <div class="space-y-2">
-            <p class="">Reflection
-                <span>
-                    <div class="dropdown dropdown-bottom">
-                        <div tabindex="0" role="button" class="hover:cursor-pointer"><lucide-icon size="16"
-                                [img]="CircleQuestionMark"></lucide-icon></div>
-                        <div tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-1 w-96 p-2 shadow-sm">
-                            Practice to reflect and mindful about online opinion <br>
-                            You might LIKE something but DISAGREE <br>
-                            with it and still think this post is HELPFUL
-                            
-                            
-                        </div>
-                    </div>
-                </span>
-            </p>
-            <div class="flex items-center space-x-8">
-                <div class="text-center">
-                    <p [ngClass]="{'text-red-700': getReaction('like').is_active}" class="text-gray-500 text-sm">{{getReaction('like').count}}</p>
-                    <button class="hover:cursor-pointer  font-medium"
-                        [ngClass]="{'text-red-700': getReaction('like').is_active}"
-                        (click)="addReaction(data.id, 'like')">
-                        Like
-                    </button>
-                </div>
-
-                <div class="text-center">
-                    <p [ngClass]="{'text-red-700': getReaction('dislike').is_active}" class="text-gray-500 text-sm">{{getReaction('dislike').count}}</p>
-                    <button class="hover:cursor-pointer  font-medium"
-                        [ngClass]="{'text-red-700': getReaction('dislike').is_active}"
-                        (click)="addReaction(data.id, 'dislike')">
-                        Dislike
-                    </button>
-                </div>
-
-                <div class="text-center">
-                    <p [ngClass]="{'text-red-700': getReaction('agree').is_active}" class="text-gray-500 text-sm">{{getReaction('agree').count}}</p>
-                    <button class="hover:cursor-pointer  font-medium"
-                        [ngClass]="{'text-red-700': getReaction('agree').is_active}"
-                        (click)="addReaction(data.id, 'agree')">
-                        Agree
-                    </button>
-                </div>
-
-                <div class="text-center">
-                    <p [ngClass]="{'text-red-700': getReaction('disagree').is_active}" class="text-gray-500 text-sm">{{getReaction('disagree').count}}</p>
-                    <button class="hover:cursor-pointer  font-medium"
-                        [ngClass]="{'text-red-700': getReaction('disagree').is_active}"
-                        (click)="addReaction(data.id, 'disagree')">
-                        Disagree
-                    </button>
-                </div>
-
-                <div class="text-center">
-                    <p [ngClass]="{'text-red-700': getReaction('helpful').is_active}" class="text-gray-500 text-sm">{{getReaction('helpful').count}}</p>
-                    <button class="hover:cursor-pointer  font-medium"
-                        [ngClass]="{'text-red-700': getReaction('helpful').is_active}"
-                        (click)="addReaction(data.id, 'helpful')">
-                        Helpful
-                    </button>
-                </div>
-
-                <div class="text-center">
-                    <p [ngClass]="{'text-red-700': getReaction('unhelpful').is_active}" class="text-gray-500 text-sm">{{getReaction('unhelpful').count}}</p>
-                    <button class="hover:cursor-pointer  font-medium"
-                        [ngClass]="{'text-red-700': getReaction('unhelpful').is_active}"
-                        (click)="addReaction(data.id, 'unhelpful')">
-                        Unhelpful
-                    </button>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-    
-</div>
-
+                                <ng-template appTabContent="article_timeline">
+                                    <app-tabs className="justify-around " [tabs]="articleTimelineTabs" activeTab="all"></app-tabs>
+                                </ng-template>
+                                <ng-template appTabContent="saved_articles">
+                                    <p>Saved Articles content goes here...</p>
+      
+                                </ng-template>
+                                <ng-template appTabContent="your_article">
+                                    <p>Your Article content goes here...</p>
+                                </ng-template>
+                            </app-tabs>
                         </div>
                     </div>
                 </div>

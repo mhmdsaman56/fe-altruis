@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { SidebarStore } from "../sidebar/sidebar.store";
 import { LucideAngularModule, Settings, User, Bell } from "lucide-angular";
 import { NotificationService } from "../services/notification.service";
+import { EchoService } from "../services/echo.service";
+import { AuthService } from "../services/auth.service";
 
 @Component({
     selector: 'app-navbar',
@@ -20,6 +22,8 @@ export class NavbarComponent implements OnInit {
 
     
     public sidebar = inject(SidebarStore);
+    public echoService = inject(EchoService);
+    public authService = inject(AuthService);
 
     toggle() {
         this.sidebar.toggle();
@@ -54,6 +58,23 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit(): void {
         this.getCurrentNotification();
+        const userId = localStorage.getItem('user_id')
+        this.echoService.instance.private(`user.${userId}`).listen(
+            'NotificationCreated', (e: any)=>{
+             this.showToast('You have a new notification');
+            }
+        );
     }
+      show = signal(false);
+    message = signal('');
+
+      showToast(msg: string) {
+    this.message.set(msg);
+    this.show.set(true);
+
+    setTimeout(() => {
+      this.show.set(false);
+    }, 3000);
+  }
 
 }
