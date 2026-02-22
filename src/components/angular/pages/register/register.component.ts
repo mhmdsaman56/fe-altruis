@@ -37,5 +37,19 @@ export class RegisterComponent {
             }
         });
     }
-    // Properti dan metode untuk pendaftaran pengguna akan ditambahkan di sini
+    registerWithGoogle(response: any) {
+            const token = response.credential;
+            this.auth.handleGoogleLogin(token).subscribe({
+                next: (res) => {
+                    localStorage.setItem('token', res.payload.access_token);
+                    document.cookie = `auth_token=${res.payload.access_token}; path=/; max-age=86400; SameSite=Strict`;
+                    window.location.replace('/timeline');
+                },
+                error: (err) => {
+                    console.error('Google Registration Error:', err);
+                    this.error.set('Google registration failed.');
+                }
+            });
+
+    }
 }

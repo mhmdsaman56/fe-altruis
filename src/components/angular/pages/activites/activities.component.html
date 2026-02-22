@@ -5,14 +5,14 @@
             <app-sidebar />
             <div class="flex-1 p-6">
                 <div class="max-w-4xl mx-auto">
-                    <h1 class="font-bold text-2xl mb-2">Notifications page</h1>
-                    <p class="mb-5">Here you can see all your recent notifications, including reactions, comments, and system alerts.</p>
+                <h1 class="font-bold text-2xl mb-2">Activities page</h1>
+                <p class="mb-5">Here you can see all your recent activities, including questions, answers, and articles.</p>
                  <app-tabs [activeTab]="activeMainTab()" [tabs]="tabs" (tabChange)="activeMainTab.set($event)"></app-tabs>
                 <app-tabs className="justify-around" *ngIf="currentInteractionTabs().length > 0" [activeTab]="activeInteractionTab()" [tabs]="currentInteractionTabs()" (tabChange)="activeInteractionTab.set($event)"></app-tabs>
                 <app-tabs *ngIf="currentReactionTabs().length > 0" [activeTab]="activeReactionTab()" [tabs]="currentReactionTabs()" (tabChange)="activeReactionTab.set($event)"></app-tabs>
                 <div class="space-y-2">
 
-                    <div *ngFor="let item of data().notifications">
+                    <div *ngFor="let item of data()">
                         <div class="card w-full bg-base-100 card-md shadow-sm">
                             <div class="card-body">
                                 <h2 class="card-title">{{item.data.actor}} {{item.reaction_type}} your {{item.type}}</h2>

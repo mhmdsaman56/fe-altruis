@@ -21,12 +21,12 @@
         
         <div class="dropdown dropdown-bottom dropdown-end">
             <div tabindex="0" role="button" class="btn btn-ghost"><lucide-icon [img]="Bell" size="24" /></div>
-            <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-10 w-96  shadow-sm">
+            <ul tabindex="-1" class="dropdown-content menu bg-base-100 rounded-box z-10 w-80  shadow-sm">
                 <li class="font-bold text-lg mb-1"><p>Notifications</p></li>
-                <li *ngFor="let notification of data() "><p class="text-justify" *ngIf="notification.type === 'answer'">{{notification.data.actor}} answered your post "{{notification.data.post_body}}"</p></li>
+                <li *ngFor="let notification of data().notifications"><p class="text-left">{{ notification.data.actor}} {{notification.reaction_type}} your {{notification.type}}</p></li>
 
 
-                <li ><a href="/notification" class="block text-center underline">See all notifications</a></li>
+                <li ><a href="/notification" class="block text-center underline">See all notifications ({{ data().unread_count }})</a></li>
             </ul>
         </div>
         <a class="btn btn-ghost" href="/profile">
@@ -36,4 +36,10 @@
             <lucide-icon [img]="Settings" size="24" />
         </a>
     </div>
+    
+</div>
+<div *ngIf="show()" class="toast toast-bottom toast-end">
+  <div class="alert alert-info">
+    <span>{{ message() }}</span>
+  </div>
 </div>
